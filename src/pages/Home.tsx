@@ -11,7 +11,7 @@ export const Home = () => {
     return <Navigate to="/Signup" />;
   } else {
     return (
-      <div className="max-w-5xl mx-auto bg-slate-800">
+      <div className="min-w-full max-w-5xl mx-auto bg-slate-800">
         <Navbar />
         <ImageUpload />
         <Gallery />

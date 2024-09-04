@@ -1,9 +1,12 @@
 import { signOut } from "firebase/auth";
 import { FcGallery } from "react-icons/fc";
+import { auth } from "../firebase/config";
 
 export const Navbar = () => {
-  const Logout = () => {
-    // signOut()
+  const Logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {}
   };
   return (
     <div className="w-full flex justify-between p-4">

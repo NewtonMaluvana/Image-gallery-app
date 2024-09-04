@@ -3,11 +3,12 @@ import { useAuth } from "../hooks/UserAuth";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/config";
-import toast, { Toaster } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const SignUp = () => {
   const { user } = useAuth();
-
+  const notify = () => toast("Wow so easy!");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const route = useNavigate();
@@ -17,7 +18,8 @@ export const SignUp = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      toast.success("User Logged in");
+
+      notify();
       route("/");
     } catch (error) {}
   };
