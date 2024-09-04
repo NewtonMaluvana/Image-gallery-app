@@ -1,3 +1,4 @@
+import { useAuth } from "../hooks/UserAuth";
 import { Card } from "./Card";
 export type Items = {
   N: string;
@@ -5,6 +6,7 @@ export type Items = {
 };
 
 export const Gallery = () => {
+  const { ...user } = useAuth();
   return (
     <div>
       {[
