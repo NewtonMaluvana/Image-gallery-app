@@ -10,11 +10,14 @@ export const Navbar = () => {
   };
   return (
     <div className="w-full flex justify-between p-4">
-      <button className="btn " onClick={Logout}>
+      <button
+        className="btn bg-purple-900  hover:scale-110 duration-1000 "
+        onClick={Logout}
+      >
         Logout
       </button>
-      <div className="text-3xl font-semibold text-purple-700 flex gap-2 justify-center items-center">
-        Image Gallery <FcGallery />
+      <div className="text-3xl uppercase font-semibold text-purple-700 flex gap-2 justify-center items-center">
+        <FcGallery /> Image Gallery
       </div>
     </div>
   );

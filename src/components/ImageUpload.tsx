@@ -1,26 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BiArrowToTop } from "react-icons/bi";
 import { Usestorage } from "../firebase/storage";
-import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
-import { useFireStore } from "../hooks/useFireStore";
 
 export const ImageUpload = () => {
   const [file, setFile] = useState<File | null>(null);
   const [Error, setError] = useState(false);
   const [isVaild, setIsValid] = useState(false);
   const { Upload, Progress } = Usestorage();
-  const [pr, setPr] = useState(0);
 
-  useEffect(() => {
-    setPr(Progress);
-  }, [Progress]);
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError(false);
     setIsValid(false);
     if (
       e.target.files &&
-      e.target.files[0].name.endsWith(".jpg" || ".jpeg" || ".png" || "webp")
+      (e.target.files[0].name.endsWith(".jpg") ||
+        e.target.files[0].name.endsWith(".jpeg") ||
+        e.target.files[0].name.endsWith(".png") ||
+        e.target.files[0].name.endsWith("webp"))
     ) {
       setIsValid(true);
       setFile(e.target.files[0]);
@@ -34,12 +32,17 @@ export const ImageUpload = () => {
     if (file && isVaild) {
       console.log(file);
       Upload(file);
+      setFile(null);
     }
     setFile(null);
   };
   return (
     <div className="mt-20 flex items-start flex-col w-full px-4">
-      <form onSubmit={handleSubmit} action="" className="flex  gap-6">
+      <form
+        onSubmit={handleSubmit}
+        action=""
+        className="flex flex-col md:flex-row-reverse  gap-6"
+      >
         <div className="flex flex-col gap-2">
           <input
             onChange={handleFile}
@@ -53,19 +56,18 @@ export const ImageUpload = () => {
             </div>
           )}
         </div>
-
         <button
           disabled={!isVaild}
           type="submit"
           className={`btn ${
-            Boolean(Progress) && "loading loading-spinner"
+            Boolean(Progress) && "loading loading-ring"
           } btn-accent w-28 rounded-md text-black`}
         >
           Upload <BiArrowToTop />
         </button>
       </form>
       {
-        <div className="w-full px-32">
+        <div className="w-full px-10">
           <progress
             className="progress w-full mt-4 h-4 progress-secondary"
             value={Progress}
@@ -73,6 +75,13 @@ export const ImageUpload = () => {
           ></progress>
         </div>
       }
+      {Progress == 100 && (
+        <div className="toast">
+          <div className="alert alert-success">
+            <span>Image Uploaded</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

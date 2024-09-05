@@ -15,7 +15,7 @@ export const AuthProvider = ({
   children: React.ReactElement;
 }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     return onAuthStateChanged(auth, (User) => {
@@ -25,7 +25,7 @@ export const AuthProvider = ({
   }, []);
   return (
     <authContext.Provider value={{ user, isLoading }}>
-      {children}
+      {!isLoading && children}
     </authContext.Provider>
   );
 };
