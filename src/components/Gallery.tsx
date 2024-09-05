@@ -1,3 +1,4 @@
+import { useFireStore } from "../hooks/useFireStore";
 import { useAuth } from "../hooks/UserAuth";
 import { Card } from "./Card";
 export type Items = {
@@ -6,19 +7,17 @@ export type Items = {
 };
 
 export const Gallery = () => {
+  const { Docs } = useFireStore("images");
   const { ...user } = useAuth();
+  console.log(Docs);
   return (
-    <div>
-      {[
-        {
-          Name: "Newton Maluvana",
-          date: "2024/08/23",
-        },
-      ].map((e) => (
+    <div className=" flex flex-wrap h-full mt-10 gap-4 justify-start  items-center">
+      {Docs.map((e) => (
         <Card
           Item={{
-            Name: e.Name,
-            Date: e.date,
+            Date: e.createAt.toLocaleDateString(),
+            imgae: e.imageUrl,
+            Name: e.userEmail,
           }}
         />
       ))}

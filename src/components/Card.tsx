@@ -6,17 +6,17 @@ export const Card = ({
   Item: {
     Name: string;
     Date: string;
+    imgae: string;
   };
 }) => {
   return (
-    <div className="m-auto p-4 flex flex-col items-center">
-      <div className="w-1/4 h-48  mx-auto">
+    <div className=" rounded-lg col-span-2 m-auto bg-slate-900 p-4 flex flex-col items-center">
+      <div className="w-1/2 h-60  mx-auto">
         <img
-          src=""
+          src={Item.imgae}
           width={250}
-          height={400}
           alt=""
-          className="w-full h-full object-contain m-auto"
+          className=" h-full object-contain m-auto"
         />
       </div>
       <div className=" p-2 text-sEtart text-xl text-purple-700">

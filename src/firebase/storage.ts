@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { storage } from "./config";
+import { Db, storage } from "./config";
 import { v4 } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { addDoc, collection } from "firebase/firestore";
+import { useAuth } from "../hooks/UserAuth";
 
 export const Usestorage = () => {
   const [Progress, setProgress] = useState(0);
   const [error, setError] = useState<Error | null>(null);
   const [url, setUrl] = useState("");
-
+  const { user } = useAuth();
   const Upload = (file: File) => {
     if (!file) {
     }
@@ -32,12 +34,16 @@ export const Usestorage = () => {
         // Handle unsuccessful uploads
         setError(error);
       },
-      () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setUrl(downloadURL);
-          setProgress(Progress);
+      async () => {
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+        setUrl(downloadURL);
+        setProgress(Progress);
+
+        await addDoc(collection(Db, "images"), {
+          imageUrl: downloadURL,
+          createAt: new Date(),
+          userEmail: user?.email,
         });
       }
     );

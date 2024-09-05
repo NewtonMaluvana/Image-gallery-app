@@ -3,6 +3,7 @@ import { BiArrowToTop } from "react-icons/bi";
 import { Usestorage } from "../firebase/storage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useFireStore } from "../hooks/useFireStore";
 
 export const ImageUpload = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -11,9 +12,6 @@ export const ImageUpload = () => {
   const { Upload, Progress } = Usestorage();
   const [pr, setPr] = useState(0);
 
-  const style = {
-    width: `${Progress}%`,
-  };
   useEffect(() => {
     setPr(Progress);
   }, [Progress]);
@@ -60,8 +58,8 @@ export const ImageUpload = () => {
           disabled={!isVaild}
           type="submit"
           className={`btn ${
-            Boolean(Progress) && "loading loading-ring"
-          } btn-accent w-28 rounded-md`}
+            Boolean(Progress) && "loading loading-spinner"
+          } btn-accent w-28 rounded-md text-black`}
         >
           Upload <BiArrowToTop />
         </button>

@@ -10,6 +10,7 @@ export const SignUp = () => {
   const { user } = useAuth();
   const notify = () => toast("Wow so easy!");
   const [email, setEmail] = useState<string>("");
+  const [error, setError] = useState(false);
   const [password, setPassword] = useState<string>("");
   const route = useNavigate();
   console.log(email);
@@ -19,9 +20,10 @@ export const SignUp = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
 
-      notify();
       route("/");
-    } catch (error) {}
+    } catch (error) {
+      setError(true);
+    }
   };
   if (user) {
     return <Navigate to="/" replace={true} />;
@@ -50,6 +52,12 @@ export const SignUp = () => {
                     className="input input-bordered"
                     required
                   />
+
+                  {error && (
+                    <div className="text-red-600">
+                      user with that email already exist
+                    </div>
+                  )}
                 </div>
                 <div className="form-control">
                   <label className="label">

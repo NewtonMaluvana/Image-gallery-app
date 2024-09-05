@@ -5,14 +5,14 @@ import { AuthProvider } from "./context/auth";
 
 function App() {
   return (
-    <>
+    <div className="h-full">
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/SignUp" element={<SignUp />} />
         </Routes>
       </AuthProvider>
-    </>
+    </div>
   );
 }
 
